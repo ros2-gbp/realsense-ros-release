@@ -1,4 +1,19 @@
-import rospy
+# Copyright 2023 Intel Corporation. All Rights Reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import rclpy
+from rclpy.node import Node
 from sensor_msgs.msg import Image as msg_Image
 from sensor_msgs.msg import CameraInfo
 from cv_bridge import CvBridge, CvBridgeError
@@ -9,13 +24,13 @@ import pyrealsense2 as rs2
 if (not hasattr(rs2, 'intrinsics')):
     import pyrealsense2.pyrealsense2 as rs2
 
-class ImageListener:
+class ImageListener(Node):
     def __init__(self, depth_image_topic, depth_info_topic):
+        node_name = os.path.basename(sys.argv[0]).split('.')[0]
+        super().__init__(node_name)
         self.bridge = CvBridge()
-        self.sub = rospy.Subscriber(depth_image_topic, msg_Image, self.imageDepthCallback)
-        self.sub_info = rospy.Subscriber(depth_info_topic, CameraInfo, self.imageDepthInfoCallback)
-        confidence_topic = depth_image_topic.replace('depth', 'confidence')
-        self.sub_conf = rospy.Subscriber(confidence_topic, msg_Image, self.confidenceCallback)
+        self.sub = self.create_subscription(msg_Image, depth_image_topic, self.imageDepthCallback, 1)
+        self.sub_info = self.create_subscription(CameraInfo, depth_info_topic, self.imageDepthInfoCallback, 1)
         self.intrinsics = None
         self.pix = None
         self.pix_grade = None
@@ -45,17 +60,6 @@ class ImageListener:
         except ValueError as e:
             return
 
-    def confidenceCallback(self, data):
-        try:
-            cv_image = self.bridge.imgmsg_to_cv2(data, data.encoding)
-            grades = np.bitwise_and(cv_image >> 4, 0x0f)
-            if (self.pix):
-                self.pix_grade = grades[self.pix[1], self.pix[0]]
-        except CvBridgeError as e:
-            print(e)
-            return
-
-
 
     def imageDepthInfoCallback(self, cameraInfo):
         try:
@@ -64,15 +68,15 @@ class ImageListener:
             self.intrinsics = rs2.intrinsics()
             self.intrinsics.width = cameraInfo.width
             self.intrinsics.height = cameraInfo.height
-            self.intrinsics.ppx = cameraInfo.K[2]
-            self.intrinsics.ppy = cameraInfo.K[5]
-            self.intrinsics.fx = cameraInfo.K[0]
-            self.intrinsics.fy = cameraInfo.K[4]
+            self.intrinsics.ppx = cameraInfo.k[2]
+            self.intrinsics.ppy = cameraInfo.k[5]
+            self.intrinsics.fx = cameraInfo.k[0]
+            self.intrinsics.fy = cameraInfo.k[4]
             if cameraInfo.distortion_model == 'plumb_bob':
                 self.intrinsics.model = rs2.distortion.brown_conrady
             elif cameraInfo.distortion_model == 'equidistant':
                 self.intrinsics.model = rs2.distortion.kannala_brandt4
-            self.intrinsics.coeffs = [i for i in cameraInfo.D]
+            self.intrinsics.coeffs = [i for i in cameraInfo.d]
         except CvBridgeError as e:
             print(e)
             return
@@ -81,21 +85,21 @@ def main():
     depth_image_topic = '/camera/depth/image_rect_raw'
     depth_info_topic = '/camera/depth/camera_info'
 
-    print ('')
+    print ()
     print ('show_center_depth.py')
     print ('--------------------')
     print ('App to demontrate the usage of the /camera/depth topics.')
-    print ('')
+    print ()
     print ('Application subscribes to %s and %s topics.' % (depth_image_topic, depth_info_topic))
     print ('Application then calculates and print the range to the closest object.')
     print ('If intrinsics data is available, it also prints the 3D location of the object')
-    print ('If a confedence map is also available in the topic %s, it also prints the confidence grade.' % depth_image_topic.replace('depth', 'confidence'))
-    print ('')
+    print ()
     
     listener = ImageListener(depth_image_topic, depth_info_topic)
-    rospy.spin()
+    rclpy.spin(listener)
+    listener.destroy_node()
+    rclpy.shutdown()    
 
 if __name__ == '__main__':
-    node_name = os.path.basename(sys.argv[0]).split('.')[0]
-    rospy.init_node(node_name)
+    rclpy.init(args=sys.argv)
     main()
