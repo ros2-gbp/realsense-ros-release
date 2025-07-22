@@ -16,7 +16,7 @@
 
 namespace realsense2_camera
 {
-    Parameters::Parameters(rclcpp::Node& node) :
+    Parameters::Parameters(RosNodeBase& node) :
     _node(node),
     _logger(node.get_logger()),
     _params_backend(node),
@@ -25,6 +25,8 @@ namespace realsense2_camera
         _params_backend.add_on_set_parameters_callback(
             [this](const std::vector<rclcpp::Parameter> & parameters) 
                 { 
+                    rcl_interfaces::msg::SetParametersResult result;
+                    result.successful = true;
                     for (const auto & parameter : parameters) 
                     {
                         try
@@ -43,15 +45,15 @@ namespace realsense2_camera
                                 }
                             }
                         }
-                        catch(const std::out_of_range& e)
-                        {}
                         catch(const std::exception& e)
                         {
-                            std::cerr << e.what() << ":" << parameter.get_name() << '\n';
+                            result.successful = false;
+                            result.reason = e.what();
+                            ROS_WARN_STREAM("Set parameter {" << parameter.get_name()
+                                                            << "} failed: " << e.what());
                         }                            
                     }
-                    rcl_interfaces::msg::SetParametersResult result;
-                    result.successful = true;
+
                     return result;
                 });
         monitor_update_functions(); // Start parameters update thread
@@ -113,10 +115,10 @@ namespace realsense2_camera
         try
         {
             ROS_DEBUG_STREAM("setParam::Setting parameter: " << param_name);
-#if defined(DASHING) || defined(ELOQUENT) || defined(FOXY)
-            //do nothing for old versions
+#if defined(FOXY)
+            //do nothing for old versions (foxy)
 #else
-            descriptor.dynamic_typing=true; // Without this, undeclare_parameter() throws in Galactic onward.
+            descriptor.dynamic_typing=true;
 #endif
             if (!_node.get_parameter(param_name, result_value))
             {
@@ -153,7 +155,14 @@ namespace realsense2_camera
             };
         if (result_value != initial_value && func)
         {
-            func(rclcpp::Parameter(param_name, result_value));
+            try
+            {
+                func(rclcpp::Parameter(param_name, result_value));
+            }
+            catch(const std::exception& e)
+            {
+                ROS_WARN_STREAM("Set parameter {" << param_name << "} failed: " << e.what());
+            } 
         }
         return result_value;
     }
@@ -262,6 +271,40 @@ namespace realsense2_camera
         _param_functions.erase(param_name);
     }
 
+    /**
+     * @brief Retrieves an existing parameter or declares it with an initial value if not already declared.
+     *
+     * This function ensures that a parameter exists within the node. If the parameter is already
+     * declared, its current value is retrieved. Otherwise, the function declares the parameter 
+     * with the provided `initial_value` and then returns it.
+     *
+     * @tparam T The type of the parameter.
+     * @param param_name The name of the parameter.
+     * @param initial_value The default value to declare if the parameter is not already declared.
+     * @return The value of the parameter after declaration or retrieval.
+     *
+     * @note This function is useful for ensuring that required parameters are available without 
+     * explicitly checking for their existence beforehand.
+     */
+    template<class T>
+    T Parameters::getOrDeclareParameter(const std::string param_name, const T& initial_value)
+    {
+        // Declare parameter if not already declared
+        if (!_node.has_parameter(param_name))
+        {
+            _node.declare_parameter(param_name, rclcpp::ParameterValue(initial_value));
+        }
+
+        // Retrieve the parameter value safely
+        return getParam<T>(param_name);
+    }
+
+    template <class T>
+    T Parameters::getParam(std::string param_name)
+    {
+        return _node.get_parameter(param_name).get_value<T>();
+    }
+
     template void Parameters::setParamT<bool>(std::string param_name, bool& param, std::function<void(const rclcpp::Parameter&)> func, rcl_interfaces::msg::ParameterDescriptor descriptor);
     template void Parameters::setParamT<int>(std::string param_name, int& param, std::function<void(const rclcpp::Parameter&)> func, rcl_interfaces::msg::ParameterDescriptor descriptor);
     template void Parameters::setParamT<double>(std::string param_name, double& param, std::function<void(const rclcpp::Parameter&)> func, rcl_interfaces::msg::ParameterDescriptor descriptor);
@@ -279,4 +322,11 @@ namespace realsense2_camera
     template void Parameters::queueSetRosValue<int>(const std::string& param_name, const int value);
 
     template int Parameters::readAndDeleteParam<int>(std::string param_name, const int& initial_value);
+
+    template int Parameters::getOrDeclareParameter<int>(const std::string param_name, const int& initial_value);
+    template bool Parameters::getOrDeclareParameter<bool>(const std::string param_name, const bool& initial_value);
+    template double Parameters::getOrDeclareParameter<double>(const std::string param_name, const double& initial_value);
+    template std::string Parameters::getOrDeclareParameter<std::string>(const std::string param_name, const std::string& initial_value);
+
+    template bool Parameters::getParam<bool>(std::string param_name);
 }
