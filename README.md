@@ -1,3 +1,29 @@
+## realsense2_camera (rolling) - 4.56.4-2
+
+The packages in the `realsense2_camera` repository were released into the `rolling` distro by running `/usr/bin/bloom-release --rosdistro rolling --track rolling --override-release-repository-url https://github.com/ros2-gbp/realsense-ros-release.git --override-release-repository-push-url https://github.com/ros2-gbp/realsense-ros-release.git realsense2_camera -d --edit` on `Tue, 22 Jul 2025 17:19:49 -0000`
+
+These packages were released:
+- `realsense2_camera`
+- `realsense2_camera_msgs`
+- `realsense2_description`
+
+Version of package(s) in repository `realsense2_camera`:
+
+- upstream repository: https://github.com/IntelRealSense/realsense-ros.git
+- release repository: https://github.com/ros2-gbp/realsense-ros-release.git
+- rosdistro version: `4.56.4-1`
+- old version: `4.56.4-1`
+- new version: `4.56.4-2`
+
+Versions of tools used:
+
+- bloom version: `0.13.0`
+- catkin_pkg version: `1.0.0`
+- rosdep version: `0.25.1`
+- rosdistro version: `1.0.1`
+- vcstools version: `0.1.42`
+
+
 ## realsense2_camera (kilted) - 4.56.4-1
 
 The packages in the `realsense2_camera` repository were released into the `kilted` distro by running `/usr/bin/bloom-release --rosdistro kilted --track kilted --override-release-repository-url https://github.com/ros2-gbp/realsense-ros-release.git --override-release-repository-push-url https://github.com/ros2-gbp/realsense-ros-release.git realsense2_camera --edit` on `Tue, 22 Jul 2025 12:05:42 -0000`
