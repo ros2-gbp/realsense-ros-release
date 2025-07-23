@@ -1,0 +1,71 @@
+ros-rolling-realsense2-camera-msgs (4.56.4-3bookworm) bookworm; urgency=high
+
+  * PR #3153 <https://github.com/IntelRealSense/realsense-ros/issues/3153> from SamerKhshiboun: TC | Fix feedback and update readme
+  * fix feedback and update readme for TC
+  * PR #3138 <https://github.com/IntelRealSense/realsense-ros/issues/3138> from SamerKhshiboun: Support Triggered Calibration as ROS2 Action
+  * implement Triggered Calibration action
+  * PR #3125 <https://github.com/IntelRealSense/realsense-ros/issues/3125> from SamerKhshiboun: Support calibration config read/write services
+  * support calib config read/write services
+  * PR #3100 <https://github.com/IntelRealSense/realsense-ros/issues/3100> from jiuguangw: Suppress CMake warnings
+  * Update CMakeLists.txt
+  * Contributors: Jiuguang Wang, Samer Khshiboun, SamerKhshiboun
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Mon, 21 Jul 2025 21:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.55.1-3bookworm) bookworm; urgency=high
+
+  * PR #2830 <https://github.com/IntelRealSense/realsense-ros/issues/2830> from SamerKhshiboun: Add RGBD + reduce changes between hkr and development
+  * Contributors: SamerKhshiboun
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Mon, 27 May 2024 21:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.54.1-3bookworm) bookworm; urgency=high
+
+  * add info about extrinsic msg format in Extrinsics.msg and README.md
+  * Expose USB port in DeviceInfo service
+  * Fix Apache License Header and Intel Copyrights
+  * apply copyrights and license on project
+  * Contributors: Arun Prasad, Nir Azkiel, SamerKhshiboun, Stephan Wirth
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Mon, 26 Jun 2023 21:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.51.1-3bookworm) bookworm; urgency=high
+
+  * Add copyright and license to all ROS2-beta source files
+  * Contributors: SamerKhshiboun
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Mon, 12 Sep 2022 21:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.0.4-3bookworm) bookworm; urgency=high
+
+
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Sat, 19 Mar 2022 22:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.0.3-3bookworm) bookworm; urgency=high
+
+
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Tue, 15 Mar 2022 22:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.0.2-3bookworm) bookworm; urgency=high
+
+
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Wed, 23 Feb 2022 22:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (4.0.1-3bookworm) bookworm; urgency=high
+
+
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Mon, 31 Jan 2022 22:00:00 -0000
+
+ros-rolling-realsense2-camera-msgs (3.2.3-3bookworm) bookworm; urgency=high
+
+  * publish metadata
+  * Add service: device_info
+  * Contributors: doronhi
+
+ -- LibRealSense ROS Team <librs.ros@intel.com>  Wed, 10 Nov 2021 22:00:00 -0000
+
+
