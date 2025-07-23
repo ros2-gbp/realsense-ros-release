@@ -1,0 +1,12 @@
+Source: ros-rolling-realsense2-camera
+Section: misc
+Priority: optional
+Maintainer: LibRealSense ROS Team <librs.ros@intel.com>
+Build-Depends: debhelper (>= 9.0.0), libeigen3-dev, python3-numpy <!nocheck>, python3-requests <!nocheck>, python3-tqdm <!nocheck>, ros-rolling-ament-cmake, ros-rolling-ament-cmake-gtest <!nocheck>, ros-rolling-ament-cmake-pytest <!nocheck>, ros-rolling-builtin-interfaces, ros-rolling-cv-bridge, ros-rolling-diagnostic-updater, ros-rolling-geometry-msgs, ros-rolling-image-transport, ros-rolling-launch-pytest <!nocheck>, ros-rolling-launch-testing <!nocheck>, ros-rolling-librealsense2, ros-rolling-lifecycle-msgs, ros-rolling-nav-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-rclcpp-lifecycle, ros-rolling-realsense2-camera-msgs, ros-rolling-ros-environment, ros-rolling-ros2topic <!nocheck>, ros-rolling-sensor-msgs, ros-rolling-sensor-msgs-py <!nocheck>, ros-rolling-std-msgs, ros-rolling-std-srvs, ros-rolling-tf2, ros-rolling-tf2-ros, ros-rolling-tf2-ros-py <!nocheck>, ros-rolling-ros-workspace
+Homepage: http://www.ros.org/wiki/RealSense
+Standards-Version: 3.9.2
+
+Package: ros-rolling-realsense2-camera
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, libeigen3-dev, ros-rolling-builtin-interfaces, ros-rolling-cv-bridge, ros-rolling-diagnostic-updater, ros-rolling-geometry-msgs, ros-rolling-image-transport, ros-rolling-launch-ros, ros-rolling-librealsense2, ros-rolling-lifecycle-msgs, ros-rolling-nav-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-rclcpp-lifecycle, ros-rolling-realsense2-camera-msgs, ros-rolling-sensor-msgs, ros-rolling-std-msgs, ros-rolling-std-srvs, ros-rolling-tf2, ros-rolling-tf2-ros, ros-rolling-ros-workspace
+Description: RealSense camera package allowing access to Intel D400 3D cameras
