@@ -14,12 +14,19 @@
 
 #pragma once
 
-#include <rclcpp/rclcpp.hpp>
+#include <librealsense2/rs.hpp>
+#include <memory>
 
-// Define RosNodeBase Alias
-#ifdef USE_LIFECYCLE_NODE
-#include <rclcpp_lifecycle/lifecycle_node.hpp>
-using RosNodeBase = rclcpp_lifecycle::LifecycleNode;
-#else
-using RosNodeBase = rclcpp::Node;
-#endif
+class RSContextSingletonWrapper {
+public:
+    static rs2::context& getInstance() {
+        static rs2::context ctx;
+        return ctx;
+    }
+
+private:
+    RSContextSingletonWrapper() = delete;
+    ~RSContextSingletonWrapper() = delete;
+    RSContextSingletonWrapper(const RSContextSingletonWrapper&) = delete;
+    RSContextSingletonWrapper& operator=(const RSContextSingletonWrapper&) = delete;
+};
