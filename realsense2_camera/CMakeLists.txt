@@ -1,4 +1,4 @@
-# Copyright 2024 Intel Corporation. All Rights Reserved.
+# Copyright 2024 RealSense, Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(realsense2_camera)
 
 # Default to C99
@@ -106,27 +106,58 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
-find_package(cv_bridge REQUIRED)
-find_package(image_transport REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(rclcpp_components REQUIRED)
 find_package(realsense2_camera_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(diagnostic_updater REQUIRED)
 find_package(OpenCV REQUIRED COMPONENTS core)
 
-find_package(realsense2 2.56.4)
+find_package(rclcpp_components REQUIRED)
+if(TARGET rclcpp_components::component)
+  set(RCLCPP_COMPONENT_TARGET rclcpp_components::component)
+else()
+  # Foxy fallback
+  set(RCLCPP_COMPONENT_TARGET)
+endif()
+
+
+find_package(image_transport REQUIRED)
+if(TARGET image_transport::image_transport)
+  set(IMAGE_TRANSPORT_TARGET image_transport::image_transport)
+else()
+  # Foxy fallback
+  set(IMAGE_TRANSPORT_TARGET ${image_transport_LIBRARIES})
+endif()
+
+
+find_package(cv_bridge REQUIRED)
+if(TARGET cv_bridge::cv_bridge)
+  set(CV_BRIDGE_TARGET cv_bridge::cv_bridge)
+else()
+  # Foxy fallback
+  set(CV_BRIDGE_TARGET ${cv_bridge_LIBRARIES})
+endif()
+
+
+find_package(sensor_msgs REQUIRED)
+if(TARGET sensor_msgs::sensor_msgs_library)
+  set(SENSOR_MSGS_TARGET sensor_msgs::sensor_msgs_library)
+else()
+  # Foxy fallback
+  set(SENSOR_MSGS_TARGET ${sensor_msgs_LIBRARIES})
+endif()
+
+find_package(realsense2 2.57.7)
 if (BUILD_ACCELERATE_GPU_WITH_GLSL)
-  find_package(realsense2-gl 2.56.4)
+  find_package(realsense2-gl 2.57.7)
 endif()
 if(NOT realsense2_FOUND)
-    message(FATAL_ERROR "\n\n Intel RealSense SDK 2.0 is missing, please install it from https://github.com/IntelRealSense/librealsense/releases\n\n")
+    message(FATAL_ERROR "\n\n RealSense SDK 2.0 is missing, please install it from https://github.com/realsenseai/librealsense/releases\n\n")
 endif()
 
 #set(CMAKE_NO_SYSTEM_FROM_IMPORTED true)
@@ -152,6 +183,7 @@ set(SOURCES
     src/image_publisher.cpp
     src/tfs.cpp
     src/actions.cpp
+    src/safety.cpp
   )
 
 if (BUILD_ACCELERATE_GPU_WITH_GLSL)
@@ -181,6 +213,10 @@ elseif("$ENV{ROS_DISTRO}" STREQUAL "jazzy")
   message(STATUS "Build for ROS2 Jazzy")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DJAZZY")
   set(SOURCES "${SOURCES}" src/ros_param_backend.cpp)
+elseif("$ENV{ROS_DISTRO}" STREQUAL "kilted")
+  message(STATUS "Build for ROS2 Kilted")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DKILTED")
+  set(SOURCES "${SOURCES}" src/ros_param_backend.cpp)
 else()
   message(FATAL_ERROR "Unsupported ROS Distribution: " "$ENV{ROS_DISTRO}")
 endif()
@@ -201,6 +237,7 @@ if (BUILD_ACCELERATE_GPU_WITH_GLSL)
 endif()
 
 set(INCLUDES
+    include/context_singleton_wrapper.h
     include/constants.h
     include/realsense_node_factory.h
     include/base_realsense_node.h
@@ -261,10 +298,27 @@ set(dependencies
   diagnostic_updater
 )
 
+set (targets
+  ${CV_BRIDGE_TARGET}
+  ${IMAGE_TRANSPORT_TARGET}
+  rclcpp::rclcpp
+  ${RCLCPP_COMPONENT_TARGET}
+  ${realsense2_camera_msgs_TARGETS}
+  ${std_srvs_TARGETS}
+  ${std_msgs_TARGETS}
+  ${SENSOR_MSGS_TARGET}
+  ${nav_msgs_TARGETS}
+  tf2::tf2
+  tf2_ros::tf2_ros
+  diagnostic_updater::diagnostic_updater
+)
+
 if (BUILD_ACCELERATE_GPU_WITH_GLSL)
   list(APPEND dependencies realsense2-gl)
+  list(APPEND targets realsense2-gl::realsense2-gl)
 else()
   list(APPEND dependencies realsense2)
+  list(APPEND targets realsense2::realsense2)
 endif()
 
 # If the flag is enabled, define the macro
@@ -272,6 +326,9 @@ if(USE_LIFECYCLE_NODE)
     find_package(rclcpp_lifecycle REQUIRED)
     find_package(lifecycle_msgs REQUIRED)
     list(APPEND dependencies rclcpp_lifecycle lifecycle_msgs)
+    list(APPEND targets 
+        rclcpp_lifecycle::rclcpp_lifecycle
+        lifecycle_msgs::lifecycle_msgs__rosidl_typesupport_cpp)
     add_definitions(-DUSE_LIFECYCLE_NODE)
     message("🚀 USE_LIFECYCLE_NODE is ENABLED")
 
@@ -286,8 +343,8 @@ endif()
 install(FILES "${CMAKE_BINARY_DIR}/global_settings.yaml"
     DESTINATION share/${PROJECT_NAME}/config)
 
-ament_target_dependencies(${PROJECT_NAME}
-  ${dependencies}
+target_link_libraries(${PROJECT_NAME}
+  ${targets}
 )
 
 rclcpp_components_register_node(${PROJECT_NAME}
@@ -344,9 +401,9 @@ if(BUILD_TESTING)
           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
           $<INSTALL_INTERFACE:include>
        )
-       ament_target_dependencies(${_test_name}
-          std_srvs
-          std_msgs
+       target_link_libraries(${_test_name}
+          std_srvs::std_srvs__rosidl_typesupport_cpp
+          std_msgs::std_msgs__rosidl_typesupport_cpp
        )
        #target_link_libraries(${_test_name} name_of_local_library)
     endforeach()
@@ -367,7 +424,7 @@ if(BUILD_TESTING)
     get_filename_component(_test_name ${file} NAME_WE)
     ament_add_pytest_test(${_test_name} ${file}
       APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}:${CMAKE_SOURCE_DIR}/test/utils:${CMAKE_SOURCE_DIR}/launch:${CMAKE_SOURCE_DIR}/scripts
-      TIMEOUT 60
+      TIMEOUT 120
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
     endforeach()
