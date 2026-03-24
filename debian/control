@@ -1,0 +1,12 @@
+Source: ros-rolling-realsense2-camera
+Section: misc
+Priority: optional
+Maintainer: LibRealSense Team <rsswsdk@realsensecloud.onmicrosoft.com>
+Build-Depends: debhelper (>= 9.0.0), image-transport-tools, libcv-bridge-dev, libdiagnostic-updater-dev, libeigen3-dev, libgeometry-msgs-dev, libimage-transport-dev, libnav-msgs-dev, libsensor-msgs-dev, libstd-msgs-dev, libstd-srvs-dev, libtf2-dev, libtf2-ros-dev, python3-cv-bridge, python3-diagnostic-updater, python3-geometry-msgs, python3-nav-msgs, python3-numpy <!nocheck>, python3-requests <!nocheck>, python3-sensor-msgs, python3-std-msgs, python3-std-srvs, python3-tf2, python3-tf2-ros, python3-tqdm <!nocheck>, ros-environment, ros-geometry-msgs, ros-nav-msgs, ros-rolling-ament-cmake, ros-rolling-ament-cmake-gtest <!nocheck>, ros-rolling-ament-cmake-pytest <!nocheck>, ros-rolling-builtin-interfaces, ros-rolling-launch-pytest <!nocheck>, ros-rolling-launch-testing <!nocheck>, ros-rolling-librealsense2, ros-rolling-lifecycle-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-rclcpp-lifecycle, ros-rolling-realsense2-camera-msgs, ros-rolling-ros2topic <!nocheck>, ros-rolling-sensor-msgs-py <!nocheck>, ros-rolling-tf2-ros-py <!nocheck>, ros-sensor-msgs, ros-std-msgs, ros-std-srvs, ros-rolling-ros-workspace
+Homepage: http://www.ros.org/wiki/RealSense
+Standards-Version: 3.9.2
+
+Package: ros-rolling-realsense2-camera
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, image-transport-tools, libcv-bridge-dev, libdiagnostic-updater-dev, libeigen3-dev, libgeometry-msgs-dev, libimage-transport-dev, libnav-msgs-dev, libsensor-msgs-dev, libstd-msgs-dev, libstd-srvs-dev, libtf2-dev, libtf2-ros-dev, python3-cv-bridge, python3-diagnostic-updater, python3-geometry-msgs, python3-nav-msgs, python3-sensor-msgs, python3-std-msgs, python3-std-srvs, python3-tf2, python3-tf2-ros, ros-geometry-msgs, ros-nav-msgs, ros-rolling-builtin-interfaces, ros-rolling-launch-ros, ros-rolling-librealsense2, ros-rolling-lifecycle-msgs, ros-rolling-rclcpp, ros-rolling-rclcpp-components, ros-rolling-rclcpp-lifecycle, ros-rolling-realsense2-camera-msgs, ros-sensor-msgs, ros-std-msgs, ros-std-srvs, ros-rolling-ros-workspace
+Description: RealSense camera package allowing access to RealSense D400 3D cameras
