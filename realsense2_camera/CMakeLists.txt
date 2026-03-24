@@ -1,4 +1,4 @@
-# Copyright 2024 Intel Corporation. All Rights Reserved.
+# Copyright 2024 RealSense, Inc. All Rights Reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 project(realsense2_camera)
 
 # Default to C99
@@ -106,27 +106,58 @@ endif()
 
 find_package(ament_cmake REQUIRED)
 find_package(builtin_interfaces REQUIRED)
-find_package(cv_bridge REQUIRED)
-find_package(image_transport REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
-find_package(rclcpp_components REQUIRED)
 find_package(realsense2_camera_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(diagnostic_updater REQUIRED)
 find_package(OpenCV REQUIRED COMPONENTS core)
 
-find_package(realsense2 2.56)
+find_package(rclcpp_components REQUIRED)
+if(TARGET rclcpp_components::component)
+  set(RCLCPP_COMPONENT_TARGET rclcpp_components::component)
+else()
+  # Foxy fallback
+  set(RCLCPP_COMPONENT_TARGET)
+endif()
+
+
+find_package(image_transport REQUIRED)
+if(TARGET image_transport::image_transport)
+  set(IMAGE_TRANSPORT_TARGET image_transport::image_transport)
+else()
+  # Foxy fallback
+  set(IMAGE_TRANSPORT_TARGET ${image_transport_LIBRARIES})
+endif()
+
+
+find_package(cv_bridge REQUIRED)
+if(TARGET cv_bridge::cv_bridge)
+  set(CV_BRIDGE_TARGET cv_bridge::cv_bridge)
+else()
+  # Foxy fallback
+  set(CV_BRIDGE_TARGET ${cv_bridge_LIBRARIES})
+endif()
+
+
+find_package(sensor_msgs REQUIRED)
+if(TARGET sensor_msgs::sensor_msgs_library)
+  set(SENSOR_MSGS_TARGET sensor_msgs::sensor_msgs_library)
+else()
+  # Foxy fallback
+  set(SENSOR_MSGS_TARGET ${sensor_msgs_LIBRARIES})
+endif()
+
+find_package(realsense2 2.57.7)
 if (BUILD_ACCELERATE_GPU_WITH_GLSL)
-  find_package(realsense2-gl 2.56)
+  find_package(realsense2-gl 2.57.7)
 endif()
 if(NOT realsense2_FOUND)
-    message(FATAL_ERROR "\n\n Intel RealSense SDK 2.0 is missing, please install it from https://github.com/IntelRealSense/librealsense/releases\n\n")
+    message(FATAL_ERROR "\n\n RealSense SDK 2.0 is missing, please install it from https://github.com/realsenseai/librealsense/releases\n\n")
 endif()
 
 #set(CMAKE_NO_SYSTEM_FROM_IMPORTED true)
@@ -152,6 +183,7 @@ set(SOURCES
     src/image_publisher.cpp
     src/tfs.cpp
     src/actions.cpp
+    src/safety.cpp
   )
 
 if (BUILD_ACCELERATE_GPU_WITH_GLSL)
@@ -205,6 +237,7 @@ if (BUILD_ACCELERATE_GPU_WITH_GLSL)
 endif()
 
 set(INCLUDES
+    include/context_singleton_wrapper.h
     include/constants.h
     include/realsense_node_factory.h
     include/base_realsense_node.h
@@ -266,14 +299,14 @@ set(dependencies
 )
 
 set (targets
-  cv_bridge::cv_bridge
-  image_transport::image_transport
+  ${CV_BRIDGE_TARGET}
+  ${IMAGE_TRANSPORT_TARGET}
   rclcpp::rclcpp
-  rclcpp_components::component
+  ${RCLCPP_COMPONENT_TARGET}
   ${realsense2_camera_msgs_TARGETS}
   ${std_srvs_TARGETS}
   ${std_msgs_TARGETS}
-  sensor_msgs::sensor_msgs_library
+  ${SENSOR_MSGS_TARGET}
   ${nav_msgs_TARGETS}
   tf2::tf2
   tf2_ros::tf2_ros
@@ -391,7 +424,7 @@ if(BUILD_TESTING)
     get_filename_component(_test_name ${file} NAME_WE)
     ament_add_pytest_test(${_test_name} ${file}
       APPEND_ENV PYTHONPATH=${CMAKE_CURRENT_BINARY_DIR}:${CMAKE_SOURCE_DIR}/test/utils:${CMAKE_SOURCE_DIR}/launch:${CMAKE_SOURCE_DIR}/scripts
-      TIMEOUT 60
+      TIMEOUT 120
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
     endforeach()
