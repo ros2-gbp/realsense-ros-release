@@ -1,0 +1,12 @@
+Source: ros-kilted-realsense2-camera
+Section: misc
+Priority: optional
+Maintainer: LibRealSense Team <rsswsdk@realsensecloud.onmicrosoft.com>
+Build-Depends: debhelper (>= 9.0.0), image-transport-tools, libcv-bridge-dev, libdiagnostic-updater-dev, libeigen3-dev, libgeometry-msgs-dev, libimage-transport-dev, libnav-msgs-dev, libsensor-msgs-dev, libstd-msgs-dev, libstd-srvs-dev, libtf2-dev, libtf2-ros-dev, python3-cv-bridge, python3-diagnostic-updater, python3-geometry-msgs, python3-nav-msgs, python3-numpy <!nocheck>, python3-requests <!nocheck>, python3-sensor-msgs, python3-std-msgs, python3-std-srvs, python3-tf2, python3-tf2-ros, python3-tqdm <!nocheck>, ros-environment, ros-geometry-msgs, ros-kilted-ament-cmake, ros-kilted-ament-cmake-gtest <!nocheck>, ros-kilted-ament-cmake-pytest <!nocheck>, ros-kilted-builtin-interfaces, ros-kilted-launch-pytest <!nocheck>, ros-kilted-launch-testing <!nocheck>, ros-kilted-librealsense2, ros-kilted-lifecycle-msgs, ros-kilted-rclcpp, ros-kilted-rclcpp-components, ros-kilted-rclcpp-lifecycle, ros-kilted-realsense2-camera-msgs, ros-kilted-ros2topic <!nocheck>, ros-kilted-sensor-msgs-py <!nocheck>, ros-kilted-tf2-ros-py <!nocheck>, ros-nav-msgs, ros-sensor-msgs, ros-std-msgs, ros-std-srvs, ros-kilted-ros-workspace
+Homepage: http://www.ros.org/wiki/RealSense
+Standards-Version: 3.9.2
+
+Package: ros-kilted-realsense2-camera
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, image-transport-tools, libcv-bridge-dev, libdiagnostic-updater-dev, libeigen3-dev, libgeometry-msgs-dev, libimage-transport-dev, libnav-msgs-dev, libsensor-msgs-dev, libstd-msgs-dev, libstd-srvs-dev, libtf2-dev, libtf2-ros-dev, python3-cv-bridge, python3-diagnostic-updater, python3-geometry-msgs, python3-nav-msgs, python3-sensor-msgs, python3-std-msgs, python3-std-srvs, python3-tf2, python3-tf2-ros, ros-geometry-msgs, ros-kilted-builtin-interfaces, ros-kilted-launch-ros, ros-kilted-librealsense2, ros-kilted-lifecycle-msgs, ros-kilted-rclcpp, ros-kilted-rclcpp-components, ros-kilted-rclcpp-lifecycle, ros-kilted-realsense2-camera-msgs, ros-nav-msgs, ros-sensor-msgs, ros-std-msgs, ros-std-srvs, ros-kilted-ros-workspace
+Description: RealSense camera package allowing access to RealSense D400 3D cameras
