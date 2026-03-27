@@ -1,3 +1,29 @@
+## realsense2_camera (humble) - 4.57.7-3
+
+The packages in the `realsense2_camera` repository were released into the `humble` distro by running `/home/administrator/.local/bin/bloom-release --ros-distro humble --track humble realsense2_camera --edit` on `Fri, 27 Mar 2026 16:07:13 -0000`
+
+These packages were released:
+- `realsense2_camera`
+- `realsense2_camera_msgs`
+- `realsense2_description`
+
+Version of package(s) in repository `realsense2_camera`:
+
+- upstream repository: https://github.com/realsenseai/realsense-ros.git
+- release repository: https://github.com/ros2-gbp/realsense-ros-release.git
+- rosdistro version: `4.57.7-1`
+- old version: `4.57.7-2`
+- new version: `4.57.7-3`
+
+Versions of tools used:
+
+- bloom version: `0.13.0`
+- catkin_pkg version: `0.4.24`
+- rosdep version: `0.21.0`
+- rosdistro version: `0.8.3`
+- vcstools version: `0.1.42`
+
+
 ## realsense2_camera (humble) - 4.57.7-2
 
 The packages in the `realsense2_camera` repository were released into the `humble` distro by running `/home/administrator/.local/bin/bloom-release --ros-distro humble --track humble realsense2_camera --edit` on `Fri, 27 Mar 2026 13:00:18 -0000`
