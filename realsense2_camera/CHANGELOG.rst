@@ -2,67 +2,81 @@
 Changelog for package realsense2_camera
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.57.8 (2026-03-27)
+4.58.3 (2026-07-20)
 -------------------
-
-4.57.7 (2026-03-24)
--------------------
-* add release noted
-* Update package.xml
-* Update package.xml
+* Push 4.58.3 release into ros2-master (`#3540 <https://github.com/IntelRealSense/realsense-ros/issues/3540>`_)
+* Fix image_transport::create_publisher for ROS2 Rolling (`#3541 <https://github.com/IntelRealSense/realsense-ros/issues/3541>`_)
+* Update package.xml  to version 4.58.3
+* Update constants.h to version 4.58.3
+* Merge master into ros2-development (4.58.2 release sync) (`#3529 <https://github.com/IntelRealSense/realsense-ros/issues/3529>`_)
+* Keep development versions after master merge (ROS 4.58.0, rgbd_plugin 0.1.0)
+* Merge remote-tracking branch 'origin/ros2-master' into ros2-development
+* Merge pull request `#3527 <https://github.com/IntelRealSense/realsense-ros/issues/3527>`_ from Nir-Az/fix-rosci-port-detection
+  rosci: route YKUSH control through rspy hub (drop direct ykushcmd)
+* rosci: skip YKUSH hub reset on first attempt to avoid ykushcmd USB-error spam
+* rosci: route YKUSH control through rspy hub, drop all ykushcmd calls
+* rosci: derive YKUSH port map from a single rspy query (no per-port toggling)
+* Merge pull request `#3526 <https://github.com/IntelRealSense/realsense-ros/issues/3526>`_ from Nir-Az/fix-device-name-prefix-parse
+  Make live-camera device-name parsing vendor-prefix-agnostic
+* Address review: use NAME_LINE_VALUE_OFFSET constant instead of literal 2
+* Remove Intel references from live-camera and mqtt-bridge test files
+* Make live-camera device-name parsing vendor-prefix-agnostic
+* Merge pull request `#3524 <https://github.com/IntelRealSense/realsense-ros/issues/3524>`_ from Nir-Az/fix-d555-name-match
+  Fix D555 DDS device detection to not depend on Intel name prefix
+* Merge remote-tracking branch 'origin/r/4.58.2' into ros2-master
+  # Conflicts:
+  #	realsense2_camera/CHANGELOG.rst
+  #	realsense2_camera/CMakeLists.txt
+  #	realsense2_camera_msgs/CHANGELOG.rst
+  #	realsense2_description/CHANGELOG.rst
+  #	realsense2_ros_mqtt_bridge/CHANGELOG.rst
+* Fix D555 DDS device detection to not depend on Intel name prefix
+* PR `#3501 <https://github.com/IntelRealSense/realsense-ros/issues/3501>`_ from Nir-Az: Push release 4.57.7 to master
+* Merge remote-tracking branch 'origin/r/4.57.7' into ros2-master
+* PR `#3482 <https://github.com/IntelRealSense/realsense-ros/issues/3482>`_ from Nir-Az: Push Release 4.57.6 to master
+* Merge remote-tracking branch 'origin/r/4.57.6' into ros2-master
+  # Conflicts:
+  #	realsense2_camera/include/constants.h
+  #	realsense2_camera/package.xml
+  #	realsense2_camera_msgs/package.xml
+  #	realsense2_description/package.xml
+  #	realsense2_ros_mqtt_bridge/package.xml
+  #	realsense2_ros_mqtt_bridge/setup.py
+* Update version in constants.h
+* Update CMakeLists.txt version
+* Update package.xml version
+* PR `#3477 <https://github.com/IntelRealSense/realsense-ros/issues/3477>`_ from Nir-Az: Push 4.57.4 release to ros2-master
 * Update constants.h
-* PR `#3485 <https://github.com/IntelRealSense/realsense-ros/issues/3485>`_ from Nir-Az: Fix GHA flow
-* install missing packages
-* PR `#3475 <https://github.com/IntelRealSense/realsense-ros/issues/3475>`_ from remibettan: find package set to last major release version
-* find package set to lrs prev major version 2
-* PR `#3474 <https://github.com/IntelRealSense/realsense-ros/issues/3474>`_ from remibettan: find package set to lrs prev major version
-* find package set to lrs prev major version
-* PR `#3462 <https://github.com/IntelRealSense/realsense-ros/issues/3462>`_ from remibettan: intel removed and github user changed
-* undoing the change in copyright, fixing bagfiles links
-* PR `#3468 <https://github.com/IntelRealSense/realsense-ros/issues/3468>`_ from remibettan: using legacy libraries for foxy
-* using legacy libraries for foxy
-* code review corrections
-* many intel removed and github user changed
-* PR `#3450 <https://github.com/IntelRealSense/realsense-ros/issues/3450>`_ from Nir-Az: update to realsenseai
-* update to realsenseai
-* PR `#3448 <https://github.com/IntelRealSense/realsense-ros/issues/3448>`_ from OhadMeir: Add motion_fps to launch file
-* Add motion_fps to launch file
-* PR `#3442 <https://github.com/IntelRealSense/realsense-ros/issues/3442>`_ from remibettan/restore-minor-version-to-0: minor versions back to 0
-* minor back to 0 - leftovers
-* minor back to 0
-* PR `#3441 <https://github.com/IntelRealSense/realsense-ros/issues/3441>`_ from remibettan/ros2-development: merging 4.57.3 to ros2-development
-* Merge tag '4.57.3' into ros2-development
-* PR `#3437 <https://github.com/IntelRealSense/realsense-ros/issues/3437>`_ from Gilaadb: bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
-* bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
-* Contributors: Gilad Bretter, Nir Azkiel, OhadMeir, Remi Bettan, remibettan
-
-* Update package.xml
-* Update package.xml
-* Update constants.h
-* PR `#3485 <https://github.com/IntelRealSense/realsense-ros/issues/3485>`_ from Nir-Az: Fix GHA flow
-* install missing packages
-* PR `#3475 <https://github.com/IntelRealSense/realsense-ros/issues/3475>`_ from remibettan: find package set to last major release version
-* find package set to lrs prev major version 2
-* PR `#3474 <https://github.com/IntelRealSense/realsense-ros/issues/3474>`_ from remibettan: find package set to lrs prev major version
-* find package set to lrs prev major version
-* PR `#3462 <https://github.com/IntelRealSense/realsense-ros/issues/3462>`_ from remibettan: intel removed and github user changed
-* undoing the change in copyright, fixing bagfiles links
-* PR `#3468 <https://github.com/IntelRealSense/realsense-ros/issues/3468>`_ from remibettan: using legacy libraries for foxy
-* using legacy libraries for foxy
-* code review corrections
-* many intel removed and github user changed
-* PR `#3450 <https://github.com/IntelRealSense/realsense-ros/issues/3450>`_ from Nir-Az: update to realsenseai
-* update to realsenseai
-* PR `#3448 <https://github.com/IntelRealSense/realsense-ros/issues/3448>`_ from OhadMeir: Add motion_fps to launch file
-* Add motion_fps to launch file
-* PR `#3442 <https://github.com/IntelRealSense/realsense-ros/issues/3442>`_ from remibettan/restore-minor-version-to-0: minor versions back to 0
-* minor back to 0 - leftovers
-* minor back to 0
-* PR `#3441 <https://github.com/IntelRealSense/realsense-ros/issues/3441>`_ from remibettan/ros2-development: merging 4.57.3 to ros2-development
-* Merge tag '4.57.3' into ros2-development
-* PR `#3437 <https://github.com/IntelRealSense/realsense-ros/issues/3437>`_ from Gilaadb: bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
-* bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
-* Contributors: Gilad Bretter, Nir Azkiel, OhadMeir, Remi Bettan, remibettan
+* Merge remote-tracking branch 'origin/r/4.57.4' into ros2-master
+  # Conflicts:
+  #	README.md
+  #	realsense2_camera/CHANGELOG.rst
+  #	realsense2_camera/CMakeLists.txt
+  #	realsense2_camera/include/constants.h
+  #	realsense2_camera/package.xml
+  #	realsense2_camera_msgs/CHANGELOG.rst
+  #	realsense2_camera_msgs/package.xml
+  #	realsense2_description/CHANGELOG.rst
+  #	realsense2_description/package.xml
+* 4.57.4
+* changelogs updated
+* Update realsense2_camera package.xml to 4.57.4
+* PR `#3400 <https://github.com/IntelRealSense/realsense-ros/issues/3400>`_ from Nir-Az: Fix releases dependencies
+* remove strict requirement
+* PR `#3374 <https://github.com/IntelRealSense/realsense-ros/issues/3374>`_ from remibettan: kilted added to wrapper
+  (cherry picked from commit 01c054b352e3b0019460347b73579726114b0404)
+  # Conflicts:
+  #	.github/workflows/main.yml
+* PR `#3399 <https://github.com/IntelRealSense/realsense-ros/issues/3399>`_ from IntelRealSense: Push r/4.56.4 to master
+* PR `#3398 <https://github.com/IntelRealSense/realsense-ros/issues/3398>`_ from ashrafk93: R/4.56.4
+* 4.56.4
+* bump version to 4.56.4
+* PR `#3329 <https://github.com/IntelRealSense/realsense-ros/issues/3329>`_ from Nir-Az: Update version to 4.56.4
+* update version to 4.56.4
+* PR `#3148 <https://github.com/IntelRealSense/realsense-ros/issues/3148>`_ from SamerKhshiboun: update READMEs and CONTRIBUTING files regarding ros2-master
+* update READMEs and CONTRIBUTING files regarding ros2-master
+* Update CMakeLists.txt
+* Contributors: Ashraf Kattoura, Nir Azkiel, Remi Bettan, Samer Khshiboun, SamerKhshiboun, remibettan
 
 4.58.2 (2026-06-15)
 -------------------
@@ -174,6 +188,40 @@ Changelog for package realsense2_camera
 * PR `#3437 <https://github.com/IntelRealSense/realsense-ros/issues/3437>`_ from Gilaadb: bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
 * bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
 * Contributors: Avia Avraham, Gilad Bretter, Nandini, Nandini Thakur, Nir Azkiel, OhadMeir, Remi Bettan, remibettan
+
+4.57.8 (2026-03-27)
+-------------------
+
+4.57.7 (2026-03-24)
+-------------------
+* add release noted
+* Update package.xml
+* Update package.xml
+* Update constants.h
+* PR `#3485 <https://github.com/IntelRealSense/realsense-ros/issues/3485>`_ from Nir-Az: Fix GHA flow
+* install missing packages
+* PR `#3475 <https://github.com/IntelRealSense/realsense-ros/issues/3475>`_ from remibettan: find package set to last major release version
+* find package set to lrs prev major version 2
+* PR `#3474 <https://github.com/IntelRealSense/realsense-ros/issues/3474>`_ from remibettan: find package set to lrs prev major version
+* find package set to lrs prev major version
+* PR `#3462 <https://github.com/IntelRealSense/realsense-ros/issues/3462>`_ from remibettan: intel removed and github user changed
+* undoing the change in copyright, fixing bagfiles links
+* PR `#3468 <https://github.com/IntelRealSense/realsense-ros/issues/3468>`_ from remibettan: using legacy libraries for foxy
+* using legacy libraries for foxy
+* code review corrections
+* many intel removed and github user changed
+* PR `#3450 <https://github.com/IntelRealSense/realsense-ros/issues/3450>`_ from Nir-Az: update to realsenseai
+* update to realsenseai
+* PR `#3448 <https://github.com/IntelRealSense/realsense-ros/issues/3448>`_ from OhadMeir: Add motion_fps to launch file
+* Add motion_fps to launch file
+* PR `#3442 <https://github.com/IntelRealSense/realsense-ros/issues/3442>`_ from remibettan/restore-minor-version-to-0: minor versions back to 0
+* minor back to 0 - leftovers
+* minor back to 0
+* PR `#3441 <https://github.com/IntelRealSense/realsense-ros/issues/3441>`_ from remibettan/ros2-development: merging 4.57.3 to ros2-development
+* Merge tag '4.57.3' into ros2-development
+* PR `#3437 <https://github.com/IntelRealSense/realsense-ros/issues/3437>`_ from Gilaadb: bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
+* bug fix(rs_node_setup): Fix topic names that were improperly marked as rect (rectified)
+* Contributors: Gilad Bretter, Nir Azkiel, OhadMeir, Remi Bettan, remibettan
 
 4.57.3 (2025-09-15)
 -------------------
