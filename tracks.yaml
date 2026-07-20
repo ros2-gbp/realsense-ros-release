@@ -341,4 +341,4 @@ tracks:
     ros_distro: rolling
     vcs_type: git
     vcs_uri: https://github.com/realsenseai/realsense-ros.git
-    version: 4.57.7
+    version: :{auto}
