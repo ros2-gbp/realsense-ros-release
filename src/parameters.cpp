@@ -66,6 +66,10 @@ void BaseRealSenseNode::getParameters()
     _clipping_distance = _parameters->setParam<double>(param_name, -1.0);
     _parameters_names.push_back(param_name);
 
+    param_name = std::string("occupancy_max_range");
+    _occupancy_max_range = static_cast<float>(_parameters->setParam<double>(param_name, 2.5));
+    _parameters_names.push_back(param_name);
+
     param_name = std::string("linear_accel_cov");
     _linear_accel_cov = _parameters->setParam<double>(param_name, 0.01);
     _parameters_names.push_back(param_name);
@@ -154,6 +158,10 @@ void BaseRealSenseNode::setDynamicParams()
                             [this](const rclcpp::Parameter& parameter)
                             {
                                 _imu_sync_method = imu_sync_method(parameter.get_value<int>());
+                                {
+                                    std::lock_guard<std::mutex> lock(_imu_callback_mutex);
+                                    _imu_history.clear();
+                                }
                                 ROS_WARN("For the 'unite_imu_method' param update to take effect, "
                                          "re-enable either gyro or accel stream.");
                             }, crnt_descriptor);
