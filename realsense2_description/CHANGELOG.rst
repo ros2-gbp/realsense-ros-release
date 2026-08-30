@@ -2,8 +2,104 @@
 Changelog for package realsense2_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-4.57.7 (2026-03-24)
+4.58.4 (2026-08-30)
 -------------------
+* Update changelogs for 4.58.4
+* Freeze 4.58.4: bump version (`#3548 <https://github.com/realsenseai/realsense-ros/issues/3548>`_)
+* Update version to 4.58.4
+* pass add_plug and use_mesh args to macro 435i (`#3520 <https://github.com/realsenseai/realsense-ros/issues/3520>`_)
+* Merge branch 'ros2-development' into patch-1
+* add use_mesh option in d455 camera (`#3521 <https://github.com/realsenseai/realsense-ros/issues/3521>`_)
+* Merge branch 'ros2-development' into ileniap/add/use-mesh/d455
+* Merge branch 'ros2-development' into patch-1
+* push ros2-master to ros2-development (`#3543 <https://github.com/realsenseai/realsense-ros/issues/3543>`_)
+* reset dev versions
+* Merge remote-tracking branch 'origin/ros2-master' into ros2-development
+* Add D421 URDF model and mesh to realsense2_description (`#3534 <https://github.com/realsenseai/realsense-ros/issues/3534>`_)
+* Merge branch 'ros2-master' into patch-1
+* add use_mesh option in d455 camera
+* pass add_plug and use_mesh args to macro 435i
+  When starting simulation for d435i it wasn't possible to not use the mesh disabling the arg use_mesh. This led to gazebo crashing.
+  Passed args 'use_mesh' and 'add_plug' from d435i to parent macro d435.
+* Contributors: Ilenia, Nir Azkiel, Nir-Az, ileniap, ileniaperrella
+
+* Freeze 4.58.4: bump version (`#3548 <https://github.com/realsenseai/realsense-ros/issues/3548>`_)
+* Update version to 4.58.4
+* pass add_plug and use_mesh args to macro 435i (`#3520 <https://github.com/realsenseai/realsense-ros/issues/3520>`_)
+* Merge branch 'ros2-development' into patch-1
+* add use_mesh option in d455 camera (`#3521 <https://github.com/realsenseai/realsense-ros/issues/3521>`_)
+* Merge branch 'ros2-development' into ileniap/add/use-mesh/d455
+* Merge branch 'ros2-development' into patch-1
+* push ros2-master to ros2-development (`#3543 <https://github.com/realsenseai/realsense-ros/issues/3543>`_)
+* reset dev versions
+* Merge remote-tracking branch 'origin/ros2-master' into ros2-development
+* Add D421 URDF model and mesh to realsense2_description (`#3534 <https://github.com/realsenseai/realsense-ros/issues/3534>`_)
+* Merge branch 'ros2-master' into patch-1
+* add use_mesh option in d455 camera
+* pass add_plug and use_mesh args to macro 435i
+  When starting simulation for d435i it wasn't possible to not use the mesh disabling the arg use_mesh. This led to gazebo crashing.
+  Passed args 'use_mesh' and 'add_plug' from d435i to parent macro d435.
+* Contributors: Ilenia, Nir Azkiel, ileniap, ileniaperrella
+
+4.58.3 (2026-07-20)
+-------------------
+* Push 4.58.3 release into ros2-master (`#3540 <https://github.com/IntelRealSense/realsense-ros/issues/3540>`_)
+* Update package.xml to version 4.58.3
+* Merge master into ros2-development (4.58.2 release sync) (`#3529 <https://github.com/IntelRealSense/realsense-ros/issues/3529>`_)
+* Keep development versions after master merge (ROS 4.58.0, rgbd_plugin 0.1.0)
+* Merge remote-tracking branch 'origin/ros2-master' into ros2-development
+* Merge remote-tracking branch 'origin/r/4.58.2' into ros2-master
+  # Conflicts:
+  #	realsense2_camera/CHANGELOG.rst
+  #	realsense2_camera/CMakeLists.txt
+  #	realsense2_camera_msgs/CHANGELOG.rst
+  #	realsense2_description/CHANGELOG.rst
+  #	realsense2_ros_mqtt_bridge/CHANGELOG.rst
+* PR `#3501 <https://github.com/IntelRealSense/realsense-ros/issues/3501>`_ from Nir-Az: Push release 4.57.7 to master
+* Merge remote-tracking branch 'origin/r/4.57.7' into ros2-master
+* PR `#3482 <https://github.com/IntelRealSense/realsense-ros/issues/3482>`_ from Nir-Az: Push Release 4.57.6 to master
+* Merge remote-tracking branch 'origin/r/4.57.6' into ros2-master
+  # Conflicts:
+  #	realsense2_camera/include/constants.h
+  #	realsense2_camera/package.xml
+  #	realsense2_camera_msgs/package.xml
+  #	realsense2_description/package.xml
+  #	realsense2_ros_mqtt_bridge/package.xml
+  #	realsense2_ros_mqtt_bridge/setup.py
+* Update package.xml version
+* PR `#3477 <https://github.com/IntelRealSense/realsense-ros/issues/3477>`_ from Nir-Az: Push 4.57.4 release to ros2-master
+* Merge remote-tracking branch 'origin/r/4.57.4' into ros2-master
+  # Conflicts:
+  #	README.md
+  #	realsense2_camera/CHANGELOG.rst
+  #	realsense2_camera/CMakeLists.txt
+  #	realsense2_camera/include/constants.h
+  #	realsense2_camera/package.xml
+  #	realsense2_camera_msgs/CHANGELOG.rst
+  #	realsense2_camera_msgs/package.xml
+  #	realsense2_description/CHANGELOG.rst
+  #	realsense2_description/package.xml
+* 4.57.4
+* changelogs updated
+* Update realsense2_camera_description package.xml to 4.57.4
+* PR `#3399 <https://github.com/IntelRealSense/realsense-ros/issues/3399>`_ from IntelRealSense: Push r/4.56.4 to master
+* PR `#3398 <https://github.com/IntelRealSense/realsense-ros/issues/3398>`_ from ashrafk93: R/4.56.4
+* 4.56.4
+* bump version to 4.56.4
+* Contributors: Ashraf Kattoura, Nir Azkiel, Remi Bettan, remibettan
+
+4.58.2 (2026-06-15)
+-------------------
+* Update package.xml to 4.58.2
+* PR `#3507 <https://github.com/IntelRealSense/realsense-ros/issues/3507>`_ from Nir-Az: align ros2-development to r/4.57.7
+* versions fix
+* Merge remote-tracking branch 'origin/r/4.57.7' into ros2-development
+  # Conflicts:
+  #	realsense2_camera/package.xml
+* 4.57.8
+* add release notes
+* 4.57.7
+* add change log
 * add release noted
 * Update package.xml
 * PR `#3485 <https://github.com/IntelRealSense/realsense-ros/issues/3485>`_ from Nir-Az: Fix GHA flow
@@ -21,6 +117,12 @@ Changelog for package realsense2_description
 * Merge tag '4.57.3' into ros2-development
 * Contributors: Nir Azkiel, Niv Goren, Remi Bettan, remibettan
 
+4.57.8 (2026-03-27)
+-------------------
+
+4.57.7 (2026-03-24)
+-------------------
+* add release noted
 * Update package.xml
 * PR `#3485 <https://github.com/IntelRealSense/realsense-ros/issues/3485>`_ from Nir-Az: Fix GHA flow
 * install missing packages
